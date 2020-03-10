@@ -12,20 +12,29 @@ const connect = function () {
   conn.setEncoding('utf8');
   stdin.setEncoding('utf8');
 
-  conn.on('data', (data) => { //creates an event
+  conn.on('data', (data) => {
     console.log("SEVER REPLIED:", data)
   })
 
-  conn.on('connect', () => { //creates an event
+  conn.on('connect', () => {
     console.log("Successfully connected to game server")
+    // console.log("Name:", name);
+    conn.write('Name: liz');
+    setInterval(() => {
+      conn.write('Move: up')
+      conn.write('Move: left')
+    }, 50)
   })
 
-  stdin.on('data', (input) => {
-    const snk = input[0] + input[1] + input[2]
-    console.log("Name:", snk);
-  })
+
+
+  // stdin.on('data', (input) => {
+  //   const name = input[0] + input[1] + input[2]
+  //   console.log("Name:", name);
+  //   conn.write(name) 
+  // })
 
   return conn;
 }
 
-module.exports = connect
+module.exports = { connect }
